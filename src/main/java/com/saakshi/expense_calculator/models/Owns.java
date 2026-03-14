@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,6 +25,8 @@ public class Owns {
     Direction direction;
     @Column(nullable = false)
     String otherPartyName;
+    @Column(nullable = true)
+    String otherPartyEmail;
     @Column(nullable = false)
     String selfName;
     @Column(nullable = false)
@@ -32,4 +36,10 @@ public class Owns {
     @CreationTimestamp
     @Column(nullable = false,updatable = false)
     LocalDateTime createdAt;
+    @Column(nullable = false)
+    int reminderBefore;
+    @Column(nullable = false)
+    int reminderAfter;
+    @Column(nullable = false,updatable = false)
+    LocalDate dueDate;
 }

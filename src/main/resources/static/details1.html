@@ -103,8 +103,15 @@
 
 <div class="settlement-card">
     <input type="text" id="otherName" placeholder="Enter Other Party's Name">
+    <input type="text" id="otherPartyEmail" placeholder="Enter Other Party's Email">
     <input type="text" id="myName" placeholder="Enter Your Username">
     <input type="number" id="amount" placeholder="Enter Amount in Rupees">
+    <label>Reminder before due date (days)</label>
+    <input type="number" name="reminderBefore" min="0" id="reminderBefore" placeholder="Example: 2">
+    <label>Reminder after due date (days)</label>
+    <input type="number" name="reminderAfter" min="0" id="reminderAfter" placeholder="Example: 4">
+    <label>Due Date</label>
+    <input type="date" id="dueDate">
     <button type="button" id="addBtn">Add Settlement</button>
 </div>
 
@@ -112,9 +119,13 @@
     document.getElementById("addBtn").addEventListener('click', function() {
         const myName = document.getElementById("myName").value.trim();
         const otherPartyName = document.getElementById("otherName").value.trim();
+        const otherPartyEmail = document.getElementById("otherPartyEmail").value.trim();
         const amount = parseFloat(document.getElementById("amount").value.trim());
+        const reminderBefore = parseInt(document.getElementById("reminderBefore").value.trim()) || 0;
+        const reminderAfter = parseInt(document.getElementById("reminderAfter").value.trim()) || 0;
+        const dueDate = document.getElementById("dueDate").value;
 
-        if (!myName || !otherPartyName || !amount || amount <= 0) {
+        if (!myName || !otherPartyName || !amount || amount <= 0 || !dueDate) {
             alert("Enter all the fields properly");
             return;
         }
@@ -123,7 +134,11 @@
             selfName: myName,
             otherPartyName: otherPartyName,
             amount: amount,
-            direction: "OWNS_ME"
+            direction: "OWNS_ME",
+            otherPartyEmail: otherPartyEmail,
+            reminderBefore: reminderBefore,
+            reminderAfter: reminderAfter,
+            dueDate: dueDate
         };
 
         try {
@@ -139,6 +154,10 @@
                     document.getElementById('myName').value = "";
                     document.getElementById('otherName').value = "";
                     document.getElementById('amount').value = "";
+                    document.getElementById('reminderBefore').value = "";
+                    document.getElementById('reminderAfter').value = "";
+                    document.getElementById('otherPartyEmail').value = "";
+                    document.getElementById('dueDate').value = "";
                 } else {
                     // manually throw error so it goes to catch
                     return response.text().then(text => { throw new Error(text) });

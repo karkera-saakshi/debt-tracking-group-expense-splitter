@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -14,7 +15,10 @@ import java.time.LocalDateTime;
 public class DetailsDto {
     String selfName;
     String otherPartyName;
-    //boolean isPaid;
+    String otherPartyEmail;
+    int reminderBefore;
+    int reminderAfter;
     double amount;
     Direction direction;
+    LocalDate dueDate;
 }

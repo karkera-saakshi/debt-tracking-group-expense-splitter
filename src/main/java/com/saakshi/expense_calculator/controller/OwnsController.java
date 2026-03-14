@@ -6,6 +6,7 @@ import com.saakshi.expense_calculator.models.Owns;
 import com.saakshi.expense_calculator.models.User;
 import com.saakshi.expense_calculator.repositories.OwnsRepo;
 import com.saakshi.expense_calculator.repositories.UserRepo;
+import com.saakshi.expense_calculator.services.EmailService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -22,9 +23,10 @@ public class OwnsController {
     OwnsRepo ownsRepo;
     @Autowired
     UserRepo userRepo;
+    @Autowired
+    private EmailService emailService;
     @PostMapping("/enter-details")
-    public void enterDetils(@RequestBody DetailsDto detailsDto)
-    {
+    public void enterDetils(@RequestBody DetailsDto detailsDto) {
         User user = userRepo.findByUsername(detailsDto.getSelfName());
         if (user == null) {
             throw new IllegalArgumentException("User not found with username: " + detailsDto.getSelfName());
@@ -32,16 +34,19 @@ public class OwnsController {
         Owns own = new Owns();
         own.setUser(user);
 
-        if (detailsDto.getSelfName() == null || detailsDto.getSelfName().trim().isEmpty())
-        {
+        if (detailsDto.getSelfName() == null || detailsDto.getSelfName().trim().isEmpty()) {
             throw new IllegalArgumentException("Please enter name");
         }
-        if (detailsDto.getOtherPartyName() == null || detailsDto.getOtherPartyName().trim().isEmpty())
-        {
+        if (detailsDto.getOtherPartyName() == null || detailsDto.getOtherPartyName().trim().isEmpty()) {
             throw new IllegalArgumentException("Please enter name");
         }
+        if (detailsDto.getDueDate() == null) {
+            throw new IllegalArgumentException("Please enter due date");
+        }
+        own.setDueDate(detailsDto.getDueDate());
         own.setOtherPartyName(detailsDto.getOtherPartyName());
         own.setSelfName(detailsDto.getSelfName());
+        own.setOtherPartyEmail(detailsDto.getOtherPartyEmail());
         if (detailsDto.getAmount() <= 0) {
             throw new IllegalArgumentException("Amount must be greater than 0");
         }
@@ -50,13 +55,14 @@ public class OwnsController {
         own.setPaid(false);
         own.setUser(user);  // MUST set this
         own.setDirection(detailsDto.getDirection());
+        own.setReminderBefore(detailsDto.getReminderBefore());
+        own.setReminderAfter(detailsDto.getReminderAfter());
 
         ownsRepo.save(own);
     }
 
     @GetMapping("/histories/{userId}")
-    public List<Owns> getHistory(@PathVariable int userId)
-    {
+    public List<Owns> getHistory(@PathVariable int userId) {
         return ownsRepo.findAllByUser_Id(userId);
     }
 
@@ -110,10 +116,9 @@ public class OwnsController {
     }
 
     @DeleteMapping("/delete/{userId}/{historyId}")
-    public void delete(@PathVariable int userId, @PathVariable int historyId)
-    {
-        User user = userRepo.findById(userId).orElseThrow(()-> new RuntimeException("User not found"));
-        Owns own = ownsRepo.findById(historyId).orElseThrow(()-> new RuntimeException("Transaction not found"));
+    public void delete(@PathVariable int userId, @PathVariable int historyId) {
+        User user = userRepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Owns own = ownsRepo.findById(historyId).orElseThrow(() -> new RuntimeException("Transaction not found"));
         ownsRepo.delete(own);
     }
 
