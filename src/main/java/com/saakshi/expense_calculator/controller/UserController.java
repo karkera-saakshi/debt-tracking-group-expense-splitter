@@ -9,6 +9,7 @@ import com.saakshi.expense_calculator.services.ExpenseCalculationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -18,10 +19,12 @@ import java.util.Map;
 public class UserController {
     @Autowired
     UserRepo userRepo;
-
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
     @PostMapping("/register")
     public String register(@RequestBody User user)
     {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepo.save(user);
         return "Signup Successful";
     }
@@ -34,7 +37,7 @@ public class UserController {
             return ResponseEntity.status(404).body("User not found");
         }
 
-        if (!user.getPassword().equals(loginDto.getPassword())) {
+        if (!bCryptPasswordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
             return ResponseEntity.status(401).body("Incorrect password");
         }
 
