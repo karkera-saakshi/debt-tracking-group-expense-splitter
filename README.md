@@ -50,13 +50,13 @@ This project focuses on applying backend concepts like **MVC architecture, datab
 ✔ Structured financial tracking
 
 
-### 3️⃣ Email Reminder System (In Progress)
+### 3️⃣ Email Reminder System
 
 * Automated email reminders for:
 
   * Pending debts
   * Due payments
-* Will be implemented using:
+* Implemented using:
 
   * Spring Boot Mail API
   * Scheduled background tasks
