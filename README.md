@@ -95,7 +95,7 @@ This project focuses on applying backend concepts like **MVC architecture, datab
 
 ✅ Email reminder automation in progress
 
-🚧 Password Hashing
+✅ Password Hashing
 
 🚧 JWT Authentication
 
