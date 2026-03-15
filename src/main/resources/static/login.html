@@ -201,10 +201,10 @@
             return;
         }
 
-        const loggedInUser = await response.json();  // renamed
-
-        // store user id
-        localStorage.setItem("userId", loggedInUser.id);
+        const loggedInUser = await response.json();
+        localStorage.setItem("userId", loggedInUser.userId);
+        localStorage.setItem("username", loggedInUser.username);
+        localStorage.setItem("token", loggedInUser.token);
 
         window.location.href = "option.html";
 

@@ -201,10 +201,16 @@
     let allHistory = [];
 
     document.addEventListener('DOMContentLoaded', fetchHistory);
+    // REMOVE the || 1 fallback and add auth check
+const userId = localStorage.getItem("userId");
+if (!userId) {
+    window.location.href = "login.html";
+    return;
+}
 
     // --- 1. Fetch all history for the user ---
     async function fetchHistory() {
-        const userId = localStorage.getItem("userId") || 1; // replace with login userId
+        const userId = localStorage.getItem("userId"); // replace with login userId
 
         try {
             const response = await fetch(`http://localhost:8081/histories/${userId}`);

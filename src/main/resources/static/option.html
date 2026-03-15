@@ -153,6 +153,11 @@
 </div>
 
 <script>
+    // Check if user is logged in
+    const token = localStorage.getItem("token");
+    if (!token) {
+        window.location.href = "login.html";
+    }
     function expenseSplitterPage(){
     window.location.href = 'groupExpenseSplitter.html';
     }
