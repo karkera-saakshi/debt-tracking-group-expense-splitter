@@ -52,7 +52,7 @@ public class EmailReminderScheduler {
                     );
                     if(otherPartyEmail!=null)
                     {
-                        emailService.sendEmail(userEmail,
+                        emailService.sendEmail(otherPartyEmail,
                                 "Reminder: Payment Due Soon To "+selfName,
                                 "Good Morning "+otherPartyName + ",\n\n"+
                                         "You owe "+selfName+" ₹" +amount +".\n"+
@@ -97,7 +97,7 @@ public class EmailReminderScheduler {
                                 "Payment Due Today To "+selfName,
                                 "Good Morning " + otherPartyName + ",\n\n" +
                                         "Your payment of ₹" + amount + " to " + selfName + " is due TODAY.\n" +
-                                        "Please make the payment as soon as possible."
+                                            "Please make the payment as soon as possible."
                         );
                     }
                 }

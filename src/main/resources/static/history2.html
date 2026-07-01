@@ -360,7 +360,7 @@
             <tr>
                 <th>From</th>
                 <th>Amount</th>
-                <th>Date & Time</th>
+                <th>Due Date</th>
                 <th>Status</th>
                 <th>Email</th>
                 <th style="text-align: right;">Action</th>
@@ -423,48 +423,47 @@
     }
 
     function renderTable(data) {
-        const tbody = document.getElementById("historyTable");
-        tbody.innerHTML = "";
+    const tbody = document.getElementById("historyTable");
+    tbody.innerHTML = "";
 
-        if (data.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" class="empty-state">No records found</td></tr>`;
-            return;
-        }
-
-        data.forEach(item => {
-            const date = new Date(item.createdAt).toLocaleString(undefined, {
-                day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'
-            });
-            const statusClass = item.paid ? "paid-style" : "pending-style";
-            const rowClass = item.paid ? "row-paid" : "row-pending";
-
-            // Email column - show email or dash
-            const emailDisplay = item.otherPartyEmail
-                ? `<span class="email-cell">${item.otherPartyEmail}</span>`
-                : `<span class="no-email">—</span>`;
-
-            const tr = document.createElement("tr");
-            tr.className = rowClass;
-            tr.innerHTML = `
-                <td>${item.otherPartyName}</td>
-                <td class="amount-cell">₹${item.amount.toLocaleString()}</td>
-                <td>${date}</td>
-                <td>
-                    <span class="status-pill ${statusClass}">
-                        <select class="status-select" onchange="updateStatus(${item.id}, this.value)">
-                            <option value="true" ${item.paid ? "selected" : ""}>Paid</option>
-                            <option value="false" ${!item.paid ? "selected" : ""}>Pending</option>
-                        </select>
-                    </span>
-                </td>
-                <td>${emailDisplay}</td>
-                <td style="text-align: right;">
-                    <button class="delete-btn" onclick="deleteEntry(${item.id})">Remove</button>
-                </td>
-            `;
-            tbody.appendChild(tr);
-        });
+    if (data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="empty-state">No records found</td></tr>`;
+        return;
     }
+
+    data.forEach(item => {
+    const date = new Date(item.dueDate).toLocaleDateString(undefined, {
+        day: '2-digit', month: 'short', year: 'numeric'
+    });
+    const statusClass = item.paid ? "paid-style" : "pending-style";
+    const rowClass = item.paid ? "row-paid" : "row-pending";
+
+    const emailDisplay = item.otherPartyEmail
+        ? `<span class="email-cell">${item.otherPartyEmail}</span>`
+        : `<span class="no-email">—</span>`;
+
+    const tr = document.createElement("tr");
+    tr.className = rowClass;
+    tr.innerHTML = `
+        <td>${item.otherPartyName}</td>
+        <td class="amount-cell">₹${item.amount.toLocaleString()}</td>
+        <td>${date}</td>
+        <td>
+            <span class="status-pill ${statusClass}">
+                <select class="status-select" onchange="updateStatus(${item.id}, this.value)">
+                    <option value="true" ${item.paid ? "selected" : ""}>Paid</option>
+                    <option value="false" ${!item.paid ? "selected" : ""}>Pending</option>
+                </select>
+            </span>
+        </td>
+        <td>${emailDisplay}</td>
+        <td style="text-align: right;">
+            <button class="delete-btn" onclick="deleteEntry(${item.id})">Remove</button>
+        </td>
+    `;
+    tbody.appendChild(tr);
+});
+}
 
     async function updateStatus(id, value) {
         try {

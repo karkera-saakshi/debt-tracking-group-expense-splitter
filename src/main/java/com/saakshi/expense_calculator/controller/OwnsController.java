@@ -80,6 +80,8 @@ public class OwnsController {
                 sort1 = Sort.by("amount").descending();
                 break;
             case "amount_asc":
+                sort1 = Sort.by("amount").ascending();
+                break;
             case "default":
                 sort1 = Sort.by("amount").ascending();
                 break;

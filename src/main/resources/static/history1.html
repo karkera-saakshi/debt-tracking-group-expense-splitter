@@ -352,7 +352,7 @@
             <tr>
                 <th>Recipient</th>
                 <th>Amount</th>
-                <th>Date</th>
+                <th>Due Date</th>
                 <th>Status</th>
                 <th style="text-align: right;">Actions</th>
             </tr>
@@ -411,42 +411,42 @@
     }
 
     function renderTable(data) {
-        const tbody = document.getElementById("historyTable");
-        tbody.innerHTML = "";
+    const tbody = document.getElementById("historyTable");
+    tbody.innerHTML = "";
 
-        if (data.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" class="empty-state">No transactions found</td></tr>`;
-            return;
-        }
-
-        data.forEach(item => {
-            const dateStr = new Date(item.createdAt).toLocaleDateString(undefined, {
-                day: '2-digit', month: 'short', year: 'numeric'
-            });
-            const statusClass = item.paid ? "paid-style" : "pending-style";
-            const rowClass = item.paid ? "row-paid" : "row-pending";
-
-            const tr = document.createElement("tr");
-            tr.className = rowClass;
-            tr.innerHTML = `
-                <td>${item.otherPartyName}</td>
-                <td class="amount-cell">₹${item.amount.toLocaleString()}</td>
-                <td>${dateStr}</td>
-                <td>
-                    <span class="status-badge ${statusClass}">
-                        <select class="status-select" onchange="updateStatus(${item.id}, this.value)">
-                            <option value="true" ${item.paid ? "selected" : ""}>Paid</option>
-                            <option value="false" ${!item.paid ? "selected" : ""}>Pending</option>
-                        </select>
-                    </span>
-                </td>
-                <td style="text-align: right;">
-                    <button class="delete-btn" onclick="deleteEntry(${item.id})">Delete</button>
-                </td>
-            `;
-            tbody.appendChild(tr);
-        });
+    if (data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="empty-state">No transactions found</td></tr>`;
+        return;
     }
+
+    data.forEach(item => {
+        const dueDateStr = new Date(item.dueDate).toLocaleDateString(undefined, {
+            day: '2-digit', month: 'short', year: 'numeric'
+        });
+        const statusClass = item.paid ? "paid-style" : "pending-style";
+        const rowClass = item.paid ? "row-paid" : "row-pending";
+
+        const tr = document.createElement("tr");
+        tr.className = rowClass;
+        tr.innerHTML = `
+            <td>${item.otherPartyName}</td>
+            <td class="amount-cell">₹${item.amount.toLocaleString()}</td>
+            <td>${dueDateStr}</td>
+            <td>
+                <span class="status-badge ${statusClass}">
+                    <select class="status-select" onchange="updateStatus(${item.id}, this.value)">
+                        <option value="true" ${item.paid ? "selected" : ""}>Paid</option>
+                        <option value="false" ${!item.paid ? "selected" : ""}>Pending</option>
+                    </select>
+                </span>
+            </td>
+            <td style="text-align: right;">
+                <button class="delete-btn" onclick="deleteEntry(${item.id})">Delete</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
 
     async function updateStatus(id, value) {
         try {
