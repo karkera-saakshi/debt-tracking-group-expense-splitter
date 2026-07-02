@@ -7,6 +7,14 @@ A web-based expense management system built using **Java, Spring Boot (MVC), MyS
 * Receive automated email reminders for pending payments
 
 This project focuses on applying backend concepts like **MVC architecture, database relationships, business logic handling, and email automation** in a practical financial use case.
+## 📑 Table of Contents
+
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Core Functional Logic](#-core-functional-logic)
+- [Current Status](#-current-status)
+- [Screenshots](#-screenshots)
+- [Learning Outcomes](#-learning-outcomes)
 
 ## 🚀 Features
 
