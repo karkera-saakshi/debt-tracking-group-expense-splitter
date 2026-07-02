@@ -41,7 +41,10 @@ This project focuses on applying backend concepts like **MVC architecture, datab
   * Debtor
   * Creditor
   * Amount
+  * Email
+  * Due Date
 * Displays structured debt records
+* Gives an option of delete 
 
 ✔ Persistent storage using MySQL
 
@@ -54,8 +57,9 @@ This project focuses on applying backend concepts like **MVC architecture, datab
 
 * Automated email reminders for:
 
-  * Pending debts
-  * Due payments
+  * Payment Overdue
+  * Payment Due Soon
+  * On Day Of Payment 
 * Implemented using:
 
   * Spring Boot Mail API
@@ -101,17 +105,7 @@ This project focuses on applying backend concepts like **MVC architecture, datab
 
 ## 💡 Learning Outcomes
 
-This project strengthened understanding of:
-
-* MVC architecture in Spring Boot
-* Backend financial logic handling
-* MySQL relational database design
-* Form handling and validation
-* Email automation using Java
-* Password Hashing
-* JWT Tokens
-
-## Screenshots
+## 📸 Screenshots
 
 ### Home Page
 
@@ -186,3 +180,13 @@ This project strengthened understanding of:
 <img width="1524" height="811" alt="cal1" src="https://github.com/user-attachments/assets/5715e98b-0d88-46ea-8cb9-b709fa6e250c" />
 <img width="1516" height="809" alt="cal2" src="https://github.com/user-attachments/assets/23641107-762d-40e6-a184-d8f4583ed5c4" />
 
+
+## 💡This project strengthened understanding of:
+
+* MVC architecture in Spring Boot
+* Backend financial logic handling
+* MySQL relational database design
+* Form handling and validation
+* Email automation using Java
+* Password Hashing
+* JWT Tokens
