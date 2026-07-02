@@ -111,8 +111,6 @@ This project focuses on applying backend concepts like **MVC architecture, datab
 
 ✅ JWT Authentication
 
-## 💡 Learning Outcomes
-
 ## 📸 Screenshots
 
 ### Home Page
@@ -188,8 +186,9 @@ This project focuses on applying backend concepts like **MVC architecture, datab
 <img width="1524" height="811" alt="cal1" src="https://github.com/user-attachments/assets/5715e98b-0d88-46ea-8cb9-b709fa6e250c" />
 <img width="1516" height="809" alt="cal2" src="https://github.com/user-attachments/assets/23641107-762d-40e6-a184-d8f4583ed5c4" />
 
+## 💡 Learning Outcomes
 
-## 💡This project strengthened understanding of:
+This project strengthened understanding of:
 
 * MVC architecture in Spring Boot
 * Backend financial logic handling
